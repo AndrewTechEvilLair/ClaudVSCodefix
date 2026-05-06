@@ -1,0 +1,14 @@
+$file = "$env:USERPROFILE\.vscode\extensions\anthropic.claude-code-2.1.129-win32-x64\extension.js"
+$content = Get-Content $file -Raw
+
+# Fix 1
+$content = $content -replace 'createRequire\("file:///home/runner/work/[^"]*sdk\.mjs"\)', 'createRequire(__filename)'
+
+# Fix 2  
+$content = $content -replace 'fileURLToPath\("file:///home/runner/work/[^"]*sdk\.mjs"\)', 'fileURLToPath(require("url").pathToFileURL(__filename).href)'
+
+# Fix 3
+$content = $content -replace '__dirname\s*=\s*"/home/runner/work/[^"]*"', '__dirname = require("path").dirname(__filename)'
+
+Set-Content $file $content -NoNewline
+Write-Host "Done! Reload VS Code window now."
