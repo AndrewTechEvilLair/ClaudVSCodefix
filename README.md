@@ -1,4 +1,4 @@
-Here's a solid README:
+README
 
 ```markdown
 # fix-claude-vscode-windows
